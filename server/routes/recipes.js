@@ -7,8 +7,10 @@ router.get('/', async (req, res) => {
     const { query } = req.query;
     console.log("Incoming search query:", query);
 
+    // ✅ Return all recipes if query is empty
     if (!query || query.trim() === '') {
-      return res.status(400).json({ message: 'Query parameter is required.' });
+      const all = await Recipe.find();
+      return res.json(all);
     }
 
     const regex = new RegExp(query, 'i');
