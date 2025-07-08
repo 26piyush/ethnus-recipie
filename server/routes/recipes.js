@@ -5,28 +5,33 @@ const Recipe = require('../models/Recipe');
 router.get('/', async (req, res) => {
   try {
     const { query } = req.query;
+    console.log("Incoming search query:", query);
 
-    console.log("Incoming search query:", query); // ✅ Debug log
-
-    // ✅ Handle missing or empty query param
     if (!query || query.trim() === '') {
       return res.status(400).json({ message: 'Query parameter is required.' });
     }
 
-    const regex = new RegExp(query, 'i');
+    // ✅ Safe regex creation
+    let regex;
+    try {
+      regex = new RegExp(query, 'i');
+    } catch (err) {
+      console.error('Invalid regex pattern:', err);
+      return res.status(400).json({ message: 'Invalid query format.' });
+    }
 
     const results = await Recipe.find({
       $or: [
         { name: regex },
         { cuisine: regex },
-        { ingredients: { $elemMatch: { $regex: regex, $options: 'i' } } } // ✅ FIXED
+        { ingredients: { $elemMatch: { $regex: regex, $options: 'i' } } }
       ]
     });
 
     console.log(`Found ${results.length} results for query "${query}"`);
     res.json(results);
   } catch (err) {
-    console.error('Server error in /api/recipes:', err);
+    console.error('Server error in /api/recipes route:', err);
     res.status(500).send('Server Error');
   }
 });
