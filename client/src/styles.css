@@ -30,3 +30,47 @@ button {
   border-radius: 8px;
   background-color: white;
 }
+.container {
+  padding: 20px;
+  text-align: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.card {
+  background: #fdfdfd;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: left;
+  height: 300px;
+  overflow: hidden;
+  transition: height 0.3s ease;
+  position: relative;
+}
+
+.card h3 {
+  margin: 0 0 8px;
+}
+
+.card button {
+  margin-top: 10px;
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.card .description {
+  margin-top: 10px;
+  background: #f3f3f3;
+  padding: 10px;
+  border-radius: 6px;
+}
