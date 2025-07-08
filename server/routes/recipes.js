@@ -11,13 +11,13 @@ router.get('/', async (req, res) => {
       return res.status(400).json({ message: 'Query parameter is required.' });
     }
 
-    const regex = new RegExp(query, 'i'); // Case-insensitive
+    const regex = new RegExp(query, 'i');
 
     const results = await Recipe.find({
       $or: [
         { name: regex },
         { cuisine: regex },
-        { ingredients: { $elemMatch: { $regex: regex } } } // ✅ FIXED
+        { ingredients: regex } // ✅ simplified: works with array of strings
       ]
     });
 
