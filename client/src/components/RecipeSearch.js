@@ -5,9 +5,11 @@ function RecipeSearch() {
   const [query, setQuery] = useState('');
   const [recipes, setRecipes] = useState([]);
 
+  const API_BASE_URL = "https://ethnus-recipie.onrender.com"; // ✅ backend deployed
+
   const search = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/recipes?query=${query}`);
+      const res = await axios.get(`${API_BASE_URL}/api/recipes?query=${query}`);
       setRecipes(res.data);
     } catch (err) {
       console.error("Error fetching recipes", err);
@@ -20,7 +22,7 @@ function RecipeSearch() {
       <input
         type="text"
         value={query}
-        placeholder="Enter ingredient or cuisine pls:"
+        placeholder="Enter ingredient or cuisine"
         onChange={(e) => setQuery(e.target.value)}
       />
       <button onClick={search}>Search</button>
