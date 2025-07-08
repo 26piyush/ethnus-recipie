@@ -1,1 +1,1 @@
-# ethnus-recipie
+# mern-project-recipe-finder
