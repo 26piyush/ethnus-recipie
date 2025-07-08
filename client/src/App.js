@@ -1,9 +1,12 @@
 import React from 'react';
-import './styles.css';
 import RecipeSearch from './components/RecipeSearch';
 
 function App() {
-  return <RecipeSearch />;
+  return (
+    <div className="App">
+      <RecipeSearch />
+    </div>
+  );
 }
 
 export default App;
