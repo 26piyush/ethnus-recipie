@@ -8,7 +8,6 @@ function RecipeSearch() {
 
   const API_BASE_URL = "https://ethnus-recipie.onrender.com";
 
-  // ✅ Fetch all recipes on component mount
   useEffect(() => {
     const fetchAll = async () => {
       try {
@@ -23,10 +22,9 @@ function RecipeSearch() {
     fetchAll();
   }, []);
 
-  // ✅ Search filtered recipes
   const search = async () => {
     if (query.trim() === '') {
-      setRecipes(allRecipes); // reset to full list
+      setRecipes(allRecipes); 
       return;
     }
 
@@ -38,7 +36,6 @@ function RecipeSearch() {
     }
   };
 
-  // ✅ Clear search input and reset list
   const clearSearch = () => {
     setQuery('');
     setRecipes(allRecipes);
