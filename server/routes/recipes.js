@@ -11,20 +11,13 @@ router.get('/', async (req, res) => {
       return res.status(400).json({ message: 'Query parameter is required.' });
     }
 
-    // ✅ Safe regex creation
-    let regex;
-    try {
-      regex = new RegExp(query, 'i');
-    } catch (err) {
-      console.error('Invalid regex pattern:', err);
-      return res.status(400).json({ message: 'Invalid query format.' });
-    }
+    const regex = new RegExp(query, 'i'); // Case-insensitive
 
     const results = await Recipe.find({
       $or: [
         { name: regex },
         { cuisine: regex },
-        { ingredients: { $elemMatch: { $regex: regex, $options: 'i' } } }
+        { ingredients: { $elemMatch: { $regex: regex } } } // ✅ FIXED
       ]
     });
 
