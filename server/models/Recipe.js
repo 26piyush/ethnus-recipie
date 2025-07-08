@@ -14,8 +14,8 @@ const RecipeSchema = new mongoose.Schema({
     required: true,
   },
   description: {
-    type: String,         // <-- Add this line
-    required: false,      // Optional unless you want to enforce it
+    type: String,       
+    required: false,   
   }
 });
 
