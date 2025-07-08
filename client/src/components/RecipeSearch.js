@@ -5,7 +5,7 @@ function RecipeSearch() {
   const [query, setQuery] = useState('');
   const [recipes, setRecipes] = useState([]);
 
-  const API_BASE_URL = "https://ethnus-recipie.onrender.com"; // ✅ backend deployed
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
   const search = async () => {
     try {
