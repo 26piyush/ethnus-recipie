@@ -1,78 +1,52 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import './styles.css'; // Ensure you have this
-
-function RecipeSearch() {
-  const [query, setQuery] = useState('');
-  const [recipes, setRecipes] = useState([]);
-  const [allRecipes, setAllRecipes] = useState([]);
-  const [expandedIndex, setExpandedIndex] = useState(null); // which card is open
-
-  const API_BASE_URL = "https://ethnus-recipie.onrender.com";
-
-  useEffect(() => {
-    const fetchAll = async () => {
-      try {
-        const res = await axios.get(`${API_BASE_URL}/api/recipes`);
-        setRecipes(res.data);
-        setAllRecipes(res.data);
-      } catch (err) {
-        console.error("Error fetching all recipes", err);
-      }
-    };
-
-    fetchAll();
-  }, []);
-
-  const search = async () => {
-    if (query.trim() === '') {
-      setRecipes(allRecipes);
-      return;
-    }
-
-    try {
-      const res = await axios.get(`${API_BASE_URL}/api/recipes?query=${query}`);
-      setRecipes(res.data);
-    } catch (err) {
-      console.error("Error searching recipes", err);
-    }
-  };
-
-  const clearSearch = () => {
-    setQuery('');
-    setRecipes(allRecipes);
-  };
-
-  return (
-    <div className="container">
-      <h1>Recipe Finder</h1>
-      <input
-        type="text"
-        value={query}
-        placeholder="Enter ingredient or cuisine"
-        onChange={(e) => setQuery(e.target.value)}
-      />
-      <button onClick={search}>Search</button>
-      <button onClick={clearSearch} style={{ marginLeft: '10px' }}>Clear</button>
-
-      <div className="grid">
-        {recipes.map((r, i) => (
-          <div key={i} className="card">
-            <h3>{r.name}</h3>
-            <p><strong>Cuisine:</strong> {r.cuisine}</p>
-            <p><strong>Ingredients:</strong> {r.ingredients.join(', ')}</p>
-            <button onClick={() => setExpandedIndex(expandedIndex === i ? null : i)}>
-              {expandedIndex === i ? 'Hide Details' : 'View Details'}
-            </button>
-
-            {expandedIndex === i && r.description && (
-              <p className="description"><strong>Description:</strong> {r.description}</p>
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+.container {
+  padding: 20px;
+  text-align: center;
 }
 
-export default RecipeSearch;
+.recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.recipe-card {
+  background: #fffdfc;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: left;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  height: 250px;
+  position: relative;
+}
+
+.recipe-card.expanded {
+  height: auto;
+  background: #fff7f2;
+}
+
+.recipe-card h3 {
+  margin-top: 0;
+}
+
+.recipe-card button {
+  margin-top: 10px;
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.recipe-card .description {
+  margin-top: 10px;
+  background: #f3f3f3;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 0.95em;
+  line-height: 1.5;
+}
