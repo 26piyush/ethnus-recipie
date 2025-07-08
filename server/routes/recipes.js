@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
       $or: [
         { name: regex },
         { cuisine: regex },
-        { ingredients: { $in: [regex] } }
+        { ingredients: { $elemMatch: { $regex: regex, $options: 'i' } } } // ✅ FIXED
       ]
     });
 
