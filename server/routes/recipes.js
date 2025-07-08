@@ -7,7 +7,6 @@ router.get('/', async (req, res) => {
     const { query } = req.query;
     console.log("Incoming search query:", query);
 
-    // ✅ Return all recipes if query is empty
     if (!query || query.trim() === '') {
       const all = await Recipe.find();
       return res.json(all);
@@ -19,7 +18,7 @@ router.get('/', async (req, res) => {
       $or: [
         { name: regex },
         { cuisine: regex },
-        { ingredients: regex } // ✅ simplified: works with array of strings
+        { ingredients: regex } 
       ]
     });
 
